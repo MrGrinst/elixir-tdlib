@@ -1,7 +1,7 @@
 defmodule TDLib.Method do
   @moduledoc """
   This module was generated using Telegram's TDLib documentation. It contains
-  246 submodules (= structs).
+  248 submodules (= structs).
   """
 defmodule TestUseError do
   @moduledoc  """
@@ -285,11 +285,12 @@ defmodule CreateSupergroupChat do
   | Name | Type | Description |
   |------|------| ------------|
   | supergroup_id | number | Supergroup or channel identifier. |
+  | force | bool | If true, the chat will be created without network request. In this case all information about the chat except its type, title and photo can be incorrect. |
 
   More details on [telegram's documentation](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1create_supergroup_chat.html).
   """
 
-  defstruct "@type": "createSupergroupChat", supergroup_id: nil
+  defstruct "@type": "createSupergroupChat", supergroup_id: nil, force: nil
 end
 defmodule ToggleBasicGroupAdministrators do
   @moduledoc  """
@@ -571,11 +572,12 @@ defmodule CreatePrivateChat do
   | Name | Type | Description |
   |------|------| ------------|
   | user_id | number | User identifier. |
+  | force | bool | If true, the chat will be created without network request. In this case all information about the chat except its type, title and photo can be incorrect. |
 
   More details on [telegram's documentation](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1create_private_chat.html).
   """
 
-  defstruct "@type": "createPrivateChat", user_id: nil
+  defstruct "@type": "createPrivateChat", user_id: nil, force: nil
 end
 defmodule GetActiveLiveLocationMessages do
   @moduledoc  """
@@ -656,12 +658,27 @@ defmodule CreateSecretChat do
 
   | Name | Type | Description |
   |------|------| ------------|
-  | secret_chat_id | number | Secret Chat identifier. |
+  | secret_chat_id | number | Secret chat identifier. |
 
   More details on [telegram's documentation](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1create_secret_chat.html).
   """
 
   defstruct "@type": "createSecretChat", secret_chat_id: nil
+end
+defmodule SearchChatsOnServer do
+  @moduledoc  """
+  Searches for the specified query in the title and username of already known chats via request to the server. Returns chats in the order seen in the chat list.
+  Returns object_ptr<Chats>.
+
+  | Name | Type | Description |
+  |------|------| ------------|
+  | query | string | Query to search for. |
+  | limit | number | Maximum number of chats to be returned. |
+
+  More details on [telegram's documentation](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1search_chats_on_server.html).
+  """
+
+  defstruct "@type": "searchChatsOnServer", query: nil, limit: nil
 end
 defmodule GetStorageStatistics do
   @moduledoc  """
@@ -753,11 +770,12 @@ defmodule RegisterDevice do
   | Name | Type | Description |
   |------|------| ------------|
   | device_token | DeviceToken | Device token. |
+  | other_user_ids | number[] | List of at most 100 user identifiers of other users currently using the client. |
 
   More details on [telegram's documentation](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1register_device.html).
   """
 
-  defstruct "@type": "registerDevice", device_token: nil
+  defstruct "@type": "registerDevice", device_token: nil, other_user_ids: nil
 end
 defmodule SetUserPrivacySettingRules do
   @moduledoc  """
@@ -827,11 +845,12 @@ defmodule CreateBasicGroupChat do
   | Name | Type | Description |
   |------|------| ------------|
   | basic_group_id | number | Basic group identifier. |
+  | force | bool | If true, the chat will be created without network request. In this case all information about the chat except its type, title and photo can be incorrect. |
 
   More details on [telegram's documentation](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1create_basic_group_chat.html).
   """
 
-  defstruct "@type": "createBasicGroupChat", basic_group_id: nil
+  defstruct "@type": "createBasicGroupChat", basic_group_id: nil, force: nil
 end
 defmodule GetFavoriteStickers do
   @moduledoc  """
@@ -1167,7 +1186,7 @@ defmodule EditInlineMessageCaption do
   |------|------| ------------|
   | inline_message_id | string | Inline message identifier. |
   | reply_markup | ReplyMarkup | New message reply markup. |
-  | caption | string | New message content caption; 0-200 characters. |
+  | caption | formattedText | New message content caption; 0-200 characters. |
 
   More details on [telegram's documentation](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1edit_inline_message_caption.html).
   """
@@ -1447,11 +1466,12 @@ defmodule CancelDownloadFile do
   | Name | Type | Description |
   |------|------| ------------|
   | file_id | number | Identifier of a file to stop downloading. |
+  | only_if_pending | bool | Pass true to stop downloading only if it hasn't been started, i.e. request hasn't been sent to server. |
 
   More details on [telegram's documentation](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1cancel_download_file.html).
   """
 
-  defstruct "@type": "cancelDownloadFile", file_id: nil
+  defstruct "@type": "cancelDownloadFile", file_id: nil, only_if_pending: nil
 end
 defmodule AddRecentSticker do
   @moduledoc  """
@@ -1691,6 +1711,21 @@ defmodule GetRecentStickers do
 
   defstruct "@type": "getRecentStickers", is_attached: nil
 end
+defmodule ParseTextEntities do
+  @moduledoc  """
+  Parses Bold, Italic, Code, Pre, PreCode and TextUrl entities contained in the text. This is an offline method. May be called before authorization. Can be called synchronously.
+  Returns object_ptr<FormattedText>.
+
+  | Name | Type | Description |
+  |------|------| ------------|
+  | text | string | The text which should be parsed. |
+  | parse_mode | TextParseMode | Text parse mode. |
+
+  More details on [telegram's documentation](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1parse_text_entities.html).
+  """
+
+  defstruct "@type": "parseTextEntities", text: nil, parse_mode: nil
+end
 defmodule RequestPasswordRecovery do
   @moduledoc  """
   Requests to send a password recovery code to an email address that was previously set up.
@@ -1753,7 +1788,7 @@ defmodule EditMessageCaption do
   | chat_id | string | The chat the message belongs to. |
   | message_id | string | Identifier of the message. |
   | reply_markup | ReplyMarkup | The new message reply markup; for bots only. |
-  | caption | string | New message content caption; 0-200 characters. |
+  | caption | formattedText | New message content caption; 0-200 characters. |
 
   More details on [telegram's documentation](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1edit_message_caption.html).
   """
@@ -2253,7 +2288,7 @@ defmodule TestCallBytes do
 end
 defmodule SearchPublicChats do
   @moduledoc  """
-  Searches public chats by a prefix of their username. Currently only private chats, supergroups and channels can be public. Returns a meaningful number of results. Returns nothing if the length of the searched username prefix is less than 5. Excludes private chats with contacts from the results.
+  Searches public chats by looking for specified query in their username and title. Currently only private chats, supergroups and channels can be public. Returns a meaningful number of results. Returns nothing if the length of the searched username prefix is less than 5. Excludes private chats with contacts and chats from the chat list from the results.
   Returns object_ptr<Chats>.
 
   | Name | Type | Description |
@@ -2302,11 +2337,12 @@ defmodule GetPublicMessageLink do
   |------|------| ------------|
   | chat_id | string | Identifier of the chat to which the message belongs. |
   | message_id | string | Identifier of the message. |
+  | for_album | bool | Pass true if a link for a whole media album should be returned. |
 
   More details on [telegram's documentation](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1get_public_message_link.html).
   """
 
-  defstruct "@type": "getPublicMessageLink", chat_id: nil, message_id: nil
+  defstruct "@type": "getPublicMessageLink", chat_id: nil, message_id: nil, for_album: nil
 end
 defmodule ResendAuthenticationCode do
   @moduledoc  """

@@ -1,7 +1,7 @@
 defmodule TDLib.Object do
   @moduledoc """
   This module was generated using Telegram's TDLib documentation. It contains
-  530 submodules (= structs).
+  536 submodules (= structs).
   """
 defmodule InlineQueryResult do
   @moduledoc  """
@@ -69,7 +69,7 @@ defmodule InputMessageVideoNote do
 end
 defmodule UpdateNewMessage do
   @moduledoc  """
-  A new message was received; can also be an outgoing message sent from a different device.
+  A new message was received; can also be an outgoing message.
 
   | Name | Type | Description |
   |------|------| ------------|
@@ -126,7 +126,7 @@ defmodule OptionValueInteger do
 end
 defmodule UpdateBasicGroup do
   @moduledoc  """
-  Some data of a basic group has changed. This update is guaranteed to come before the basic group identifier is returned to the client, as long as the library has information on the group.
+  Some data of a basic group has changed. This update is guaranteed to come before the basic group identifier is returned to the client.
 
   | Name | Type | Description |
   |------|------| ------------|
@@ -438,7 +438,7 @@ defmodule InputMessageVideo do
   | duration | number | Duration of the video, in seconds. |
   | width | number | Video width. |
   | height | number | Video height. |
-  | caption | string | Video caption; 0-200 characters. |
+  | caption | formattedText | Video caption; 0-200 characters. |
   | ttl | number | Video TTL (Time To Live), in seconds (0-60). A non-zero TTL can be specified only in private chats. |
 
   More details on [telegram's documentation](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1input_message_video.html).
@@ -485,7 +485,7 @@ defmodule SupergroupMembersFilterBots do
 end
 defmodule UpdateCall do
   @moduledoc  """
-  Information about a call was updated.
+  New call was created or information about a call was updated.
 
   | Name | Type | Description |
   |------|------| ------------|
@@ -696,7 +696,7 @@ defmodule MessageVoiceNote do
   | Name | Type | Description |
   |------|------| ------------|
   | voice_note | voiceNote | Message content. |
-  | caption | string | Voice note caption. |
+  | caption | formattedText | Voice note caption. |
   | is_listened | bool | True, if at least one of the recipients has listened to the voice note. |
 
   More details on [telegram's documentation](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1message_voice_note.html).
@@ -798,7 +798,7 @@ defmodule InputMessageVoiceNote do
   | voice_note | InputFile | Voice note to be sent. |
   | duration | number | Duration of the voice note, in seconds. |
   | waveform | string | Waveform representation of the voice note, in 5-bit format. |
-  | caption | string | Voice note caption; 0-200 characters. |
+  | caption | formattedText | Voice note caption; 0-200 characters. |
 
   More details on [telegram's documentation](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1input_message_voice_note.html).
   """
@@ -950,11 +950,12 @@ defmodule PublicMessageLink do
   | Name | Type | Description |
   |------|------| ------------|
   | link | string | Message link. |
+  | html | string | HTML-code for embedding the message. |
 
   More details on [telegram's documentation](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1public_message_link.html).
   """
 
-  defstruct "@type": "publicMessageLink", link: nil
+  defstruct "@type": "publicMessageLink", link: nil, html: nil
 end
 defmodule PageBlockChatLink do
   @moduledoc  """
@@ -1713,7 +1714,7 @@ defmodule MessagePhoto do
   | Name | Type | Description |
   |------|------| ------------|
   | photo | photo | Message content. |
-  | caption | string | Photo caption. |
+  | caption | formattedText | Photo caption. |
 
   More details on [telegram's documentation](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1message_photo.html).
   """
@@ -1833,6 +1834,19 @@ defmodule UpdateNewChat do
 
   defstruct "@type": "updateNewChat", chat: nil
 end
+defmodule DeviceTokenTizenPush do
+  @moduledoc  """
+  A token for Tizen Push Service.
+
+  | Name | Type | Description |
+  |------|------| ------------|
+  | reg_id | string | Push service registration identifier, may be empty to de-register a device. |
+
+  More details on [telegram's documentation](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1device_token_tizen_push.html).
+  """
+
+  defstruct "@type": "deviceTokenTizenPush", reg_id: nil
+end
 defmodule MessageVideo do
   @moduledoc  """
   A video message.
@@ -1840,7 +1854,7 @@ defmodule MessageVideo do
   | Name | Type | Description |
   |------|------| ------------|
   | video | video | Message content. |
-  | caption | string | Video caption. |
+  | caption | formattedText | Video caption. |
 
   More details on [telegram's documentation](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1message_video.html).
   """
@@ -2099,7 +2113,7 @@ defmodule MessageAnimation do
   | Name | Type | Description |
   |------|------| ------------|
   | animation | animation | Message content. |
-  | caption | string | Animation caption. |
+  | caption | formattedText | Animation caption. |
 
   More details on [telegram's documentation](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1message_animation.html).
   """
@@ -2173,12 +2187,13 @@ defmodule DeviceTokenApplePush do
 
   | Name | Type | Description |
   |------|------| ------------|
-  | token | string | Token, may be empty to de-register a device. |
+  | device_token | string | Device token, may be empty to de-register a device. |
+  | is_app_sandbox | bool | True, if App Sandbox is enabled. |
 
   More details on [telegram's documentation](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1device_token_apple_push.html).
   """
 
-  defstruct "@type": "deviceTokenApplePush", token: nil
+  defstruct "@type": "deviceTokenApplePush", device_token: nil, is_app_sandbox: nil
 end
 defmodule NetworkTypeNone do
   @moduledoc  """
@@ -2342,6 +2357,20 @@ defmodule ConnectionStateConnectingToProxy do
 
   defstruct "@type": "connectionStateConnectingToProxy"
 end
+defmodule FormattedText do
+  @moduledoc  """
+  A text with some entities.
+
+  | Name | Type | Description |
+  |------|------| ------------|
+  | text | string | The text. |
+  | entities | textEntity[] | Entities contained in the text. |
+
+  More details on [telegram's documentation](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1formatted_text.html).
+  """
+
+  defstruct "@type": "formattedText", text: nil, entities: nil
+end
 defmodule InputInlineQueryResultVideo do
   @moduledoc  """
   Represents a link to a page containing an embedded video player or a video file.
@@ -2421,7 +2450,7 @@ defmodule DeviceTokenUbuntuPush do
 end
 defmodule UpdateSupergroup do
   @moduledoc  """
-  Some data of a supergroup or a channel has changed. This update is guaranteed to come before the supergroup identifier is returned to the client as long as the library has information on the supergroup.
+  Some data of a supergroup or a channel has changed. This update is guaranteed to come before the supergroup identifier is returned to the client.
 
   | Name | Type | Description |
   |------|------| ------------|
@@ -2571,7 +2600,7 @@ defmodule TestVectorIntObject do
 end
 defmodule UpdateSecretChat do
   @moduledoc  """
-  Some data of a secret chat has changed. This update is guaranteed to come before the secret chat identifier is returned to the client as long as the library has information about the secret chat.
+  Some data of a secret chat has changed. This update is guaranteed to come before the secret chat identifier is returned to the client.
 
   | Name | Type | Description |
   |------|------| ------------|
@@ -2588,14 +2617,13 @@ defmodule MessageText do
 
   | Name | Type | Description |
   |------|------| ------------|
-  | text | string | Text of the message. |
-  | entities | textEntity[] | Entities contained in the text. |
+  | text | formattedText | Text of the message. |
   | web_page | webPage | A preview of the web page that's mentioned in the text; may be null. |
 
   More details on [telegram's documentation](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1message_text.html).
   """
 
-  defstruct "@type": "messageText", text: nil, entities: nil, web_page: nil
+  defstruct "@type": "messageText", text: nil, web_page: nil
 end
 defmodule User do
   @moduledoc  """
@@ -2634,7 +2662,7 @@ defmodule InputMessagePhoto do
   | added_sticker_file_ids | number[] | File identifiers of the stickers added to the photo, if applicable. |
   | width | number | Photo width. |
   | height | number | Photo height. |
-  | caption | string | Photo caption; 0-200 characters. |
+  | caption | formattedText | Photo caption; 0-200 characters. |
   | ttl | number | Photo TTL (Time To Live), in seconds (0-60). A non-zero TTL can be specified only in private chats. |
 
   More details on [telegram's documentation](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1input_message_photo.html).
@@ -2792,7 +2820,7 @@ defmodule MessageAudio do
   | Name | Type | Description |
   |------|------| ------------|
   | audio | audio | Message content. |
-  | caption | string | Audio caption. |
+  | caption | formattedText | Audio caption. |
 
   More details on [telegram's documentation](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1message_audio.html).
   """
@@ -2906,12 +2934,12 @@ defmodule DeviceTokenMicrosoftPush do
 
   | Name | Type | Description |
   |------|------| ------------|
-  | token | string | Token, may be empty to de-register a device. |
+  | channel_uri | string | Push notification channel URI, may be empty to de-register a device. |
 
   More details on [telegram's documentation](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1device_token_microsoft_push.html).
   """
 
-  defstruct "@type": "deviceTokenMicrosoftPush", token: nil
+  defstruct "@type": "deviceTokenMicrosoftPush", channel_uri: nil
 end
 defmodule ChatType do
   @moduledoc  """
@@ -3824,16 +3852,14 @@ defmodule InputMessageText do
 
   | Name | Type | Description |
   |------|------| ------------|
-  | text | string | Text to be sent. |
+  | text | formattedText | Formatted text to be sent. Only Bold, Italic, Code, Pre, PreCode and TextUrl entities are allowed to be specified manually. |
   | disable_web_page_preview | bool | True, if rich web page previews for URLs in the message text should be disabled. |
   | clear_draft | bool | True, if a chat message draft should be deleted. |
-  | entities | textEntity[] | Bold, Italic, Code, Pre, PreCode and TextUrl entities contained in the text. Can't be used with a non-null parse_mode. |
-  | parse_mode | TextParseMode | Text parse mode; may be null. Can't be used in combination with enitities. |
 
   More details on [telegram's documentation](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1input_message_text.html).
   """
 
-  defstruct "@type": "inputMessageText", text: nil, disable_web_page_preview: nil, clear_draft: nil, entities: nil, parse_mode: nil
+  defstruct "@type": "inputMessageText", text: nil, disable_web_page_preview: nil, clear_draft: nil
 end
 defmodule NetworkStatisticsEntry do
   @moduledoc  """
@@ -3914,7 +3940,7 @@ defmodule InputMessageDocument do
   |------|------| ------------|
   | document | InputFile | Document to be sent. |
   | thumbnail | inputThumbnail | Document thumbnail, if available. |
-  | caption | string | Document caption; 0-200 characters. |
+  | caption | formattedText | Document caption; 0-200 characters. |
 
   More details on [telegram's documentation](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1input_message_document.html).
   """
@@ -4633,16 +4659,16 @@ defmodule MaskPointForehead do
 end
 defmodule DeviceTokenSimplePush do
   @moduledoc  """
-  A token for Simple Push API.
+  A token for Simple Push API for Firefox OS.
 
   | Name | Type | Description |
   |------|------| ------------|
-  | token | string | Token, may be empty to de-register a device. |
+  | endpoint | string | Absolute URL exposed by the push service where the application server can send push messages, may be empty to de-register a device. |
 
   More details on [telegram's documentation](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1device_token_simple_push.html).
   """
 
-  defstruct "@type": "deviceTokenSimplePush", token: nil
+  defstruct "@type": "deviceTokenSimplePush", endpoint: nil
 end
 defmodule LinkState do
   @moduledoc  """
@@ -4808,6 +4834,21 @@ defmodule UserStatusLastWeek do
   """
 
   defstruct "@type": "userStatusLastWeek"
+end
+defmodule DeviceTokenWebPush do
+  @moduledoc  """
+  A token for web Push API.
+
+  | Name | Type | Description |
+  |------|------| ------------|
+  | endpoint | string | Absolute URL exposed by the push service where the application server can send push messages, may be empty to de-register a device. |
+  | p256dh_base64url | string | Base64url-encoded P-256 elliptic curve Diffie-Hellman public key. |
+  | auth_base64url | string | Base64url-encoded authentication secret. |
+
+  More details on [telegram's documentation](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1device_token_web_push.html).
+  """
+
+  defstruct "@type": "deviceTokenWebPush", endpoint: nil, p256dh_base64url: nil, auth_base64url: nil
 end
 defmodule SearchMessagesFilterMissedCall do
   @moduledoc  """
@@ -5007,7 +5048,7 @@ defmodule Chat do
   | unread_mention_count | number | Number of unread messages with a mention/reply in the chat. |
   | notification_settings | notificationSettings | Notification settings for this chat. |
   | reply_markup_message_id | string | Identifier of the message from which reply markup needs to be used; 0 if there is no default custom reply markup in the chat. |
-  | draft_message | draftMessage | A draft of a message in the chat; may be null. parse_mode in input_message_text will always be null. |
+  | draft_message | draftMessage | A draft of a message in the chat; may be null. |
   | client_data | string | Contains client-specific data associated with the chat. (For example, the chat position or local chat notification settings can be stored here.) Persistent if a message database is used. |
 
   More details on [telegram's documentation](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1chat.html).
@@ -5027,7 +5068,7 @@ defmodule SearchMessagesFilterEmpty do
 end
 defmodule UpdateUser do
   @moduledoc  """
-  Some data of a user has changed. This update is guaranteed to come before the user identifier is returned to the client as long as the library has information on the user.
+  Some data of a user has changed. This update is guaranteed to come before the user identifier is returned to the client.
 
   | Name | Type | Description |
   |------|------| ------------|
@@ -5212,7 +5253,7 @@ defmodule InputMessageAudio do
   | duration | number | Duration of the audio, in seconds; may be replaced by the server. |
   | title | string | Title of the audio; 0-64 characters; may be replaced by the server. |
   | performer | string | Performer of the audio; 0-64 characters, may be replaced by the server. |
-  | caption | string | Audio caption; 0-200 characters. |
+  | caption | formattedText | Audio caption; 0-200 characters. |
 
   More details on [telegram's documentation](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1input_message_audio.html).
   """
@@ -5226,7 +5267,7 @@ defmodule MessageDocument do
   | Name | Type | Description |
   |------|------| ------------|
   | document | document | Message content. |
-  | caption | string | Document caption. |
+  | caption | formattedText | Document caption. |
 
   More details on [telegram's documentation](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1message_document.html).
   """
@@ -5362,6 +5403,19 @@ defmodule MessageSticker do
   """
 
   defstruct "@type": "messageSticker", sticker: nil
+end
+defmodule DeviceTokenWindowsPush do
+  @moduledoc  """
+  A token for Windows Push Notification Services.
+
+  | Name | Type | Description |
+  |------|------| ------------|
+  | access_token | string | The access token that will be used to send notifications, may be empty to de-register a device. |
+
+  More details on [telegram's documentation](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1device_token_windows_push.html).
+  """
+
+  defstruct "@type": "deviceTokenWindowsPush", access_token: nil
 end
 defmodule PageBlock do
   @moduledoc  """
@@ -5531,6 +5585,20 @@ defmodule ChatTypeBasicGroup do
 
   defstruct "@type": "chatTypeBasicGroup", basic_group_id: nil
 end
+defmodule DeviceTokenApplePushVoIP do
+  @moduledoc  """
+  A token for Apple Push Notification Service VoIP notifications.
+
+  | Name | Type | Description |
+  |------|------| ------------|
+  | device_token | string | Device token, may be empty to de-register a device. |
+  | is_app_sandbox | bool | True, if App Sandbox is enabled. |
+
+  More details on [telegram's documentation](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1device_token_apple_push_vo_i_p.html).
+  """
+
+  defstruct "@type": "deviceTokenApplePushVoIP", device_token: nil, is_app_sandbox: nil
+end
 defmodule CallbackQueryAnswer do
   @moduledoc  """
   Contains a bot's answer to a callback query.
@@ -5587,7 +5655,7 @@ defmodule InputMessageAnimation do
   | duration | number | Duration of the animation, in seconds. |
   | width | number | Width of the animation; may be replaced by the server. |
   | height | number | Height of the animation; may be replaced by the server. |
-  | caption | string | Animation caption; 0-200 characters. |
+  | caption | formattedText | Animation caption; 0-200 characters. |
 
   More details on [telegram's documentation](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1input_message_animation.html).
   """
@@ -5671,8 +5739,7 @@ defmodule Game do
   | id | string | Game ID. |
   | short_name | string | Game short name. To share a game use the URL <a href="https://t.me/{bot_username}?game={game_short_name}">https://t.me/{bot_username}?game={game_short_name}</a>. |
   | title | string | Game title. |
-  | text | string | Game text, usually containing scoreboards for a game. |
-  | text_entities | textEntity[] | Entities contained in the text. |
+  | text | formattedText | Game text, usually containing scoreboards for a game. |
   | description | string | Game description. |
   | photo | photo | Game photo. |
   | animation | animation | Game animation; may be null. |
@@ -5680,7 +5747,7 @@ defmodule Game do
   More details on [telegram's documentation](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1game.html).
   """
 
-  defstruct "@type": "game", id: nil, short_name: nil, title: nil, text: nil, text_entities: nil, description: nil, photo: nil, animation: nil
+  defstruct "@type": "game", id: nil, short_name: nil, title: nil, text: nil, description: nil, photo: nil, animation: nil
 end
 defmodule InputCredentialsNew do
   @moduledoc  """
@@ -5768,7 +5835,7 @@ defmodule DeviceTokenGoogleCloudMessaging do
 
   | Name | Type | Description |
   |------|------| ------------|
-  | token | string | Token, may be empty to de-register a device. |
+  | token | string | Device registration token, may be empty to de-register a device. |
 
   More details on [telegram's documentation](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1device_token_google_cloud_messaging.html).
   """
@@ -6566,6 +6633,19 @@ defmodule SupergroupFullInfo do
   """
 
   defstruct "@type": "supergroupFullInfo", description: nil, member_count: nil, administrator_count: nil, restricted_count: nil, banned_count: nil, can_get_members: nil, can_set_username: nil, can_set_sticker_set: nil, is_all_history_available: nil, sticker_set_id: nil, invite_link: nil, pinned_message_id: nil, upgraded_from_basic_group_id: nil, upgraded_from_max_message_id: nil
+end
+defmodule DeviceTokenMicrosoftPushVoIP do
+  @moduledoc  """
+  A token for Microsoft Push Notification Service VoIP channel.
+
+  | Name | Type | Description |
+  |------|------| ------------|
+  | channel_uri | string | Push notification channel URI, may be empty to de-register a device. |
+
+  More details on [telegram's documentation](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1device_token_microsoft_push_vo_i_p.html).
+  """
+
+  defstruct "@type": "deviceTokenMicrosoftPushVoIP", channel_uri: nil
 end
 defmodule Error do
   @moduledoc  """
