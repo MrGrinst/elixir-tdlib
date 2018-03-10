@@ -1,0 +1,6 @@
+26c26,28
+<     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} ${CXX_FLAGS_IPO}")
+---
+>     # FIXME: You have to disable LTO to make the build success
+>     # (see https://github.com/tdlib/td/issues/37#issuecomment-363615322)
+>     # set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} ${CXX_FLAGS_IPO}")

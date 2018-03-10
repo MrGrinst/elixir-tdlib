@@ -4,6 +4,9 @@ BUILD_ARTIFACT=$(BUILD_DIRECTORY)/bin/tdlib_json_cli
 PRIV_DIR=priv
 BIN_TARGET=$(PRIV_DIR)/tdlib-json-cli
 
+JOBS=2
+VERBOSE=0
+
 TDLIB_SRC=priv/tdlib_v1.1.1.tar.gz
 TDLIBJSONCLI_SRC=priv/tdlib-json-cli_v1.1.1+1.tar.gz
 
@@ -19,13 +22,14 @@ clean:
 extract:
 	mkdir -p $(BUILD_ROOT);  \
 	tar xvf $(TDLIBJSONCLI_SRC) --directory $(BUILD_ROOT) --strip-components 1; \
-	tar xvf $(TDLIB_SRC) --directory $(BUILD_ROOT)/td --strip-components 1
+	tar xvf $(TDLIB_SRC) --directory $(BUILD_ROOT)/td --strip-components 1; \
+	patch $(BUILD_ROOT)/td/CMakeLists.txt $(PRIV_DIR)/disable-lto.patch
 
 build:
 	mkdir $(BUILD_DIRECTORY); \
 	cd $(BUILD_DIRECTORY); \
-	cmake .. ; \
-	cmake --build .
+	cmake -DCMAKE_BUILD_TYPE=Release ..; \
+	make -j$(JOBS) VERBOSE=$(VERBOSE)
 
 import:
 	cp $(BUILD_ARTIFACT) $(BIN_TARGET)
