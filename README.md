@@ -21,7 +21,7 @@ Add the following to your `mix.exs` :
 
 ```
 def deps do
-  [{:tdlib, "~> 0.0.1"}]
+  [{:tdlib, "~> 0.0.2"}]
 end
 ```
 
