@@ -28,7 +28,7 @@ defmodule TDLib.Mixfile do
 
   defp package() do
     [
-      files: ["lib/tdlib*", "priv/*.tar.gz", "Makefile", "mix.exs", "README*", "LICENSE*", "CHANGELOG.*"],
+      files: ["lib/tdlib*", "priv/*.tar.gz", "priv/*.patch", "Makefile", "mix.exs", "README*", "LICENSE*", "CHANGELOG.*"],
       maintainers: ["Timothée Floure"],
       licenses: ["AGPL-3.0", "BSL-1.0"],
       links: %{
