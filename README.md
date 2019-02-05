@@ -19,7 +19,7 @@ of them launch a new instance of tdlib-json-cli via a
 
 Add the following to your `mix.exs` :
 
-```
+```elixir
 def deps do
   [{:tdlib, "~> 0.0.2"}]
 end
@@ -37,10 +37,10 @@ it's going to take a while and depends on the following :
 
 # Configuration
 
-This library **do not need** configuration, however, the following options are
+This library **does not need** configuration, however, the following options are
 available :
 
-```
+```elixir
 # Disable automatic handling of authentification and directly forward the
 # incoming messages to the client
 config :telegram_tdlib, disable_handling: false
