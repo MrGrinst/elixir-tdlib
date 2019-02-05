@@ -16,8 +16,8 @@ defmodule TDLib.Mixfile do
 
       # Docs
       name: "TDLib",
-      source_url: "https://gitlab.com/Fnux/elixir-tdlib",
-      homepage_url: "https://gitlab.com/Fnux/elixir-tdlib",
+      source_url: "https://git.sr.ht/~fnux/elixir-tdlib",
+      homepage_url: "https://git.sr.ht/~fnux/elixir-tdlib",
       docs: [main: "readme", extras: ["README.md"]]
     ]
   end
@@ -32,7 +32,8 @@ defmodule TDLib.Mixfile do
       maintainers: ["Timothée Floure"],
       licenses: ["AGPL-3.0", "BSL-1.0"],
       links: %{
-        "Sources (gitlab.com)" => "https://gitlab.com/Fnux/elixir-tdlib",
+        "Sources (git.sr.ht)" => "https://git.sr.ht/~fnux/elixir-tdlib",
+        "Bug Tracker (todo.sr.ht)" => "https://todo.sr.ht/~fnux/elixir-tdlib",
         "Telegram TDLib" => "https://core.telegram.org/tdlib"
       }
     ]
