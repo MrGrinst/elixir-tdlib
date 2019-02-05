@@ -26,10 +26,17 @@ extract:
 	patch $(BUILD_ROOT)/td/CMakeLists.txt $(PRIV_DIR)/disable-lto.patch
 
 build:
-	mkdir $(BUILD_DIRECTORY); \
+	mkdir -p $(BUILD_DIRECTORY)
+
+ifeq ($(shell uname),Darwin)
+	cd $(BUILD_DIRECTORY); \
+	cmake -DCMAKE_BUILD_TYPE=Release -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl/ ..; \
+	make -j$(JOBS) VERBOSE=$(VERBOSE)
+else
 	cd $(BUILD_DIRECTORY); \
 	cmake -DCMAKE_BUILD_TYPE=Release ..; \
 	make -j$(JOBS) VERBOSE=$(VERBOSE)
+endif
 
 import:
 	cp $(BUILD_ARTIFACT) $(BIN_TARGET)
