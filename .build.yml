@@ -6,6 +6,7 @@ packages:
   - zlib-devel
   - gperf
   - cmake
+  - tar
 sources:
   - https://git.sr.ht/~fnux/elixir-tdlib
 tasks:
