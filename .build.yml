@@ -1,0 +1,21 @@
+image: fedora/latest
+packages:
+  - elixir
+  - gcc-c++
+  - openssl-devel
+  - zlib-devel
+  - gperf
+  - cmake
+sources:
+  - https://git.sr.ht/~fnux/elixir-tdlib
+tasks:
+- build-deps: |
+  cd elixir-tdlib
+  mix deps.get
+  mix deps.compile
+- build: |
+  cd elixir-tdlib
+  mix compile
+- test: |
+  cd elixir-tdlib
+  mix test
