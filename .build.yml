@@ -10,12 +10,12 @@ sources:
   - https://git.sr.ht/~fnux/elixir-tdlib
 tasks:
 - build-deps: |
-  cd elixir-tdlib
-  mix deps.get
-  mix deps.compile
+    cd elixir-tdlib
+    mix deps.get
+    mix deps.compile
 - build: |
-  cd elixir-tdlib
-  mix compile
+    cd elixir-tdlib
+    mix compile
 - test: |
-  cd elixir-tdlib
-  mix test
+    cd elixir-tdlib
+    mix test
