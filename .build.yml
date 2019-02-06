@@ -11,6 +11,7 @@ sources:
 tasks:
 - build-deps: |
     cd elixir-tdlib
+    mix local.hex --force
     mix deps.get
     mix deps.compile
 - build: |
