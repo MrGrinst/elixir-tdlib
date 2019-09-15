@@ -2,10 +2,10 @@ defmodule TDLib do
   alias TDLib.{Session, Object}
   alias TDLib.SessionRegistry, as: Registry
 
-
   @default_config %Object.TdlibParameters{
     :use_test_dc              => false,
     :database_directory       => "/tmp/tdlib",
+    :files_directory          => "", # When empty database_directory will be used
     :use_file_database        => true,
     :use_chat_info_database   => true,
     :use_message_database     => true,
@@ -19,6 +19,7 @@ defmodule TDLib do
     :enable_storage_optimizer => true,
     :ignore_file_names        => true
   }
+
   @moduledoc """
   This module allow you to interact with and manage sessions.
   """
@@ -98,7 +99,7 @@ defmodule TDLib do
   def get_backend_binary() do
     config = Application.get_env(:tdlib, :backend_binary)
     case config do
-      nil -> :code.priv_dir(:tdlib) |> Path.join("tdlib-json-cli")
+      nil -> Mix.Project.build_path() |> Path.join("/lib/tdlib_json_cli/bin/tdlib_json_cli")
       _ -> config
     end
   end
