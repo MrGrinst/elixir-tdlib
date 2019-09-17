@@ -53,7 +53,9 @@ defmodule TDLibTest do
         phone_number = IO.gets("Please provide phone number: ") |> String.trim
         query = %Method.SetAuthenticationPhoneNumber{
           phone_number: phone_number,
-          allow_flash_call: false
+          settings: %Object.PhoneNumberAuthenticationSettings{
+            allow_flash_call: false
+          }
         }
         TDLib.transmit @session, query
 

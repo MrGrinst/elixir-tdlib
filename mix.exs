@@ -4,7 +4,7 @@ defmodule TDLib.Mixfile do
   def project do
     [
       app: :tdlib,
-      version: "0.0.2",
+      version: "0.0.3",
       elixir: "~> 1.5",
       start_permanent: Mix.env == :prod,
       compilers: [:elixir_make] ++ Mix.compilers,
@@ -28,9 +28,9 @@ defmodule TDLib.Mixfile do
 
   defp package() do
     [
-      files: ["lib/tdlib*", "priv/*.tar.gz", "priv/*.patch", "Makefile", "mix.exs", "README*", "LICENSE*", "CHANGELOG.*"],
+      files: ["lib/tdlib*", "Makefile", "mix.exs", "README*", "LICENSE*", "CHANGELOG.*"],
       maintainers: ["Timothée Floure"],
-      licenses: ["AGPL-3.0", "BSL-1.0"],
+      licenses: ["AGPL-3.0"],
       links: %{
         "Sources (git.sr.ht)" => "https://git.sr.ht/~fnux/elixir-tdlib",
         "Bug Tracker (todo.sr.ht)" => "https://todo.sr.ht/~fnux/elixir-tdlib",
@@ -52,7 +52,14 @@ defmodule TDLib.Mixfile do
     [
       {:poison, "~> 3.1"},
       {:elixir_make, "~> 0.4", runtime: false},
-      {:ex_doc, "~> 0.18", only: :dev, runtime: false}
+      {:ex_doc, "~> 0.21", only: :dev, runtime: false},
+      {:tdlib_json_cli, 
+        git: "https://github.com/oott123/tdlib-json-cli", 
+        submodules: true, 
+        tag: "v1.1.2",
+        app: false,
+        compile: false
+      }
     ]
   end
 end

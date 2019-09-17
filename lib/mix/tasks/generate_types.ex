@@ -3,7 +3,7 @@ defmodule Mix.Tasks.GenerateTypes do
 
   @object_module "lib/tdlib/object.ex"
   @method_module "lib/tdlib/method.ex"
-  @json_source "types.json"
+  @json_source Mix.Project.deps_paths().tdlib_json_cli |> Path.join("types.json")
 
   defp extract(text) do
     json = Poison.decode!(text)
@@ -81,7 +81,7 @@ defmodule Mix.Tasks.GenerateTypes do
       More details on [telegram's documentation](#{url}).
       \"""
 
-      defstruct "@type": "#{key}"#{struct_fields}
+      defstruct "@type": "#{key}", "@extra": nil#{struct_fields}
     end
     """
   end
@@ -138,13 +138,8 @@ defmodule Mix.Tasks.GenerateTypes do
   end
 
   def run(_) do
-    json_path =  case :code.priv_dir(:tdlib) do
-      {:error, _} -> @json_source
-      path -> path |> Path.join(@json_source)
-    end
-
-    IO.puts "Importing #{json_path}..."
-    text = File.read!(json_path)
+    IO.puts "Importing #{@json_source}..."
+    text = File.read!(@json_source)
 
     IO.puts "Parsing JSON..."
     {json, objects, methods} = extract(text)
