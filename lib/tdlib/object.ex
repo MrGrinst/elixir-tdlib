@@ -6643,7 +6643,13 @@ defmodule Message do
   More details on [telegram's documentation](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1message.html).
   """
 
-  defstruct "@type": "message", "@extra": nil, id: nil, sender_user_id: nil, chat_id: nil, sending_state: nil, is_outgoing: nil, can_be_edited: nil, can_be_forwarded: nil, can_be_deleted_only_for_self: nil, can_be_deleted_for_all_users: nil, is_channel_post: nil, contains_unread_mention: nil, date: nil, edit_date: nil, forward_info: nil, reply_to_message_id: nil, ttl: nil, ttl_expires_in: nil, via_bot_user_id: nil, author_signature: nil, views: nil, media_album_id: nil, content: nil, reply_markup: nil
+  defstruct "@type": "message", "@extra": nil, id: nil, sender: nil, chat_id: nil, sending_state: nil, is_outgoing: nil, can_be_edited: nil, can_be_forwarded: nil, can_be_deleted_only_for_self: nil, can_be_deleted_for_all_users: nil, is_channel_post: nil, contains_unread_mention: nil, date: nil, edit_date: nil, forward_info: nil, reply_to_message_id: nil, ttl: nil, ttl_expires_in: nil, via_bot_user_id: nil, author_signature: nil, views: nil, media_album_id: nil, content: nil, reply_markup: nil
+end
+defmodule MessageSenderChat do
+  defstruct "@type": "messageSenderChat", "@extra": nil, chat_id: nil
+end
+defmodule MessageSenderUser do
+  defstruct "@type": "messageSenderUser", "@extra": nil, user_id: nil
 end
 defmodule ChatMembersFilterBots do
   @moduledoc  """

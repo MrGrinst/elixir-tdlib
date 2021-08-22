@@ -50,35 +50,43 @@ defmodule TDLib.Handler do
 
   def handle_object(json, session) do
     type = Map.get(json, "@type")
-    struct = recursive_match(:object, json, "Elixir.TDLib.Object.")
-
-    Logger.debug "#{session}: received object #{type}"
-
-    unless @disable_handling do
-      case struct do
-        %Object.Error{code: code, message: message} ->
-          Logger.error "#{session}: error #{code} - #{message}"
-        %Object.UpdateAuthorizationState{} ->
-          case struct.authorization_state do
-            %Object.AuthorizationStateWaitTdlibParameters{} ->
-              config = Registry.get(session) |> Map.get(:config)
-              transmit session, %Method.SetTdlibParameters{
-                :parameters  => config
-              }
-            %Object.AuthorizationStateWaitEncryptionKey{} ->
-              transmit session, %Method.CheckDatabaseEncryptionKey{
-                encryption_key: Registry.get(session, :encryption_key)
-              }
-            _ -> :ignore
-          end
-        _ -> :ignore
-      end
+    struct = try do
+      recursive_match(:object, json, "Elixir.TDLib.Object.")
+    rescue
+      _ -> nil
     end
 
-    # Forward to client
-    client_pid = Registry.get(session) |> Map.get(:client_pid)
-    if is_pid(client_pid) and Process.alive?(client_pid) do
-      Kernel.send(client_pid, {:recv, struct})
+    if struct do
+      Logger.debug "#{session}: received object #{type}"
+
+      unless @disable_handling do
+        case struct do
+          %Object.Error{code: code, message: message} ->
+            Logger.error "#{session}: error #{code} - #{message}"
+          %Object.UpdateAuthorizationState{} ->
+            case struct.authorization_state do
+              %Object.AuthorizationStateWaitTdlibParameters{} ->
+                config = Registry.get(session) |> Map.get(:config)
+                transmit session, %Method.SetTdlibParameters{
+                  :parameters  => config
+                }
+              %Object.AuthorizationStateWaitEncryptionKey{} ->
+                transmit session, %Method.CheckDatabaseEncryptionKey{
+                  encryption_key: Registry.get(session, :encryption_key)
+                }
+              _ -> :ignore
+            end
+          _ -> :ignore
+        end
+      end
+
+      # Forward to client
+      client_pid = Registry.get(session) |> Map.get(:client_pid)
+      if is_pid(client_pid) and Process.alive?(client_pid) do
+        Kernel.send(client_pid, {:recv, struct})
+      end
+    else
+      Logger.info("No matching object found: #{inspect(type)}")
     end
   end
 
