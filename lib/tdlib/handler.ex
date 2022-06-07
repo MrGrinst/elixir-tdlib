@@ -124,9 +124,12 @@ defmodule TDLib.Handler do
   end
 
   defp match(:object, json, prefix) do
-    {char, rest} = json |> Map.get("@type")
-                        |> String.Casing.titlecase_once(:default)
-    string = prefix <> char <> rest
+    camelized_type =
+      json
+      |> Map.get("@type")
+      |> Macro.camelize()
+
+    string = prefix <> camelized_type
     module = String.to_existing_atom(string)
 
     struct = struct(module)

@@ -133,8 +133,7 @@ defmodule Mix.Tasks.GenerateTypes do
   end
 
   defp build_module_name(string) do
-    {char, rest} = String.Casing.titlecase_once(string, :default)
-    char <> rest
+    Macro.camelize(string)
   end
 
   def run(_) do
