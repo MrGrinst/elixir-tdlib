@@ -97,10 +97,12 @@ defmodule TDLib do
 
   @doc false
   def get_backend_binary() do
-    config = Application.get_env(:tdlib, :backend_binary)
-    case config do
-      nil -> Mix.Project.build_path() |> Path.join("/lib/tdlib_json_cli/bin/tdlib_json_cli")
-      _ -> config
+    app_name = Application.get_env(:tdlib, :app_name)
+    binary_path = Application.get_env(:tdlib, :backend_binary)
+
+    case app_name do
+      nil -> binary_path
+      _ -> Path.join(Application.app_dir(app_name), binary_path)
     end
   end
 end
