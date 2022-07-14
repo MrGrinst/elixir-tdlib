@@ -1602,6 +1602,21 @@ defmodule ChatPhoto do
 
   defstruct "@type": "chatPhoto", "@extra": nil, small: nil, big: nil
 end
+defmodule ChatPhotoInfo do
+  @moduledoc  """
+  Contains basic information about the photo of a chat.
+
+  | Name | Type | Description |
+  |------|------| ------------|
+  | small | file | A small (160x160) chat photo variant in JPEG format. The file can be downloaded only before the photo is changed. |
+  | big | file | A big (640x640) chat photo variant in JPEG format. The file can be downloaded only before the photo is changed. |
+  | minithumbnail | minithumbnail | Chat photo minithumbnail; may be null. |
+  | has_animation | bool | True, if the photo has animated variant. |
+  More details on [telegram's documentation](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1chat_photo_info.html).
+  """
+
+  defstruct "@type": "chatPhotoInfo", "@extra": nil, small: nil, big: nil, minithumbnail: nil, has_animation: nil
+end
 defmodule FileTypePhoto do
   @moduledoc  """
   The file is a photo.
@@ -7347,7 +7362,7 @@ defmodule Chat do
   | id | string | Chat unique identifier. |
   | type | ChatType | Type of the chat. |
   | title | string | Chat title. |
-  | photo | chatPhoto | Chat photo; may be null. |
+  | photo | chatPhotoInfo | Chat photo; may be null. |
   | permissions | chatPermissions | Actions that non-administrator chat members are allowed to take in the chat. |
   | last_message | message | Last message in the chat; may be null. |
   | order | string | Descending parameter by which chats are sorted in the main chat list. If the order number of two chats is the same, they must be sorted in descending order by ID. If 0, the position of the chat in the list is undetermined. |
