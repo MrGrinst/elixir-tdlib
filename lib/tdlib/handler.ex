@@ -86,7 +86,7 @@ defmodule TDLib.Handler do
         Kernel.send(client_pid, {:recv, struct})
       end
     else
-      Logger.info("No matching object found: #{inspect(type)}")
+      Logger.error("No matching object found: #{inspect(type)}")
     end
   end
 
