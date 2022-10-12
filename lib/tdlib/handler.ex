@@ -7,7 +7,7 @@ defmodule TDLib.Handler do
   # Must be a multiple of 4
   @moduledoc false
   @backend_verbosity_level 2
-  @disable_handling Application.get_env(:telegram_tdlib, :disable_handling)
+  @disable_handling Application.compile_env(:telegram_tdlib, :disable_handling)
 
   def start_link(session_name) do
     GenServer.start_link(__MODULE__, session_name, [])

@@ -97,8 +97,8 @@ defmodule TDLib do
 
   @doc false
   def get_backend_binary() do
-    app_name = Application.get_env(:tdlib, :app_name)
-    binary_path = Application.get_env(:tdlib, :backend_binary)
+    app_name = Application.compile_env(:tdlib, :app_name)
+    binary_path = Application.compile_env(:tdlib, :backend_binary)
 
     case app_name do
       nil -> binary_path
