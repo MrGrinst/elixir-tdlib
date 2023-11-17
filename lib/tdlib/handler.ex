@@ -40,7 +40,7 @@ defmodule TDLib.Handler do
     cli = Map.get(json, "@cli")
     event = Map.get(cli, "event")
 
-    Logger.debug "#{session}: received cli event #{event}"
+    Logger.info "#{session}: received cli event #{event}"
 
     case event do
       "client_created" -> set_backend_verbosity(@backend_verbosity_level, session)
@@ -57,7 +57,7 @@ defmodule TDLib.Handler do
     end
 
     if struct do
-      Logger.debug "#{session}: received object #{type}"
+      Logger.info "#{session}: received object #{type}"
 
       unless @disable_handling do
         case struct do
@@ -96,7 +96,7 @@ defmodule TDLib.Handler do
     msg = Poison.encode!(map)
     backend_pid = Registry.get(session, :backend_pid)
 
-    Logger.debug "#{session}: sending #{Map.get(map, :"@type")}"
+    Logger.info "#{session}: sending #{Map.get(map, :"@type")}"
     GenServer.call backend_pid, {:transmit, msg}
   end
 
@@ -106,7 +106,7 @@ defmodule TDLib.Handler do
     command = "verbose #{level}"
     GenServer.call backend_pid, {:transmit, command}
 
-    Logger.debug "#{session}: backend verbosity set to #{level}."
+    Logger.info "#{session}: backend verbosity set to #{level}."
   end
 
   defp recursive_match(:object, json, prefix) do
