@@ -5,7 +5,7 @@ defmodule TDLib.Mixfile do
     [
       app: :tdlib,
       version: "0.0.3",
-      elixir: "~> 1.5",
+      elixir: "~> 1.16",
       start_permanent: Mix.env == :prod,
       compilers: Mix.compilers,
       deps: deps(),
@@ -50,7 +50,7 @@ defmodule TDLib.Mixfile do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:poison, "~> 3.1"},
+      {:poison, "~> 5.0"},
       {:elixir_make, "~> 0.4", runtime: false},
       {:ex_doc, "~> 0.21", only: :dev, runtime: false},
       {:tdlib_json_cli,
